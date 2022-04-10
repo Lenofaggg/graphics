@@ -51,8 +51,7 @@ namespace graphics
                         string[] data = s.Read(sr);
                         expected = Convert.ToDouble(data[0]);
                         pzdk.SetFirstInput(data[1].Split(' ').Select(double.Parse).ToArray());
-
-
+                        
                         output = pzdk.Compute();
                         pzdk.BackPropagation(expected);
                     }
