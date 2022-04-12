@@ -16,7 +16,7 @@ namespace graphics
         public NeuronType type;
 
         public double delta;
-        private double _output;
+        public double _output;
 
         private Func<double, double> _Activate;
         private Func<double, double> _Derivative;
@@ -74,10 +74,7 @@ namespace graphics
             }            
         }
 
-        public double CalcErr(double expected)
-        {
-            return 0.5 * Math.Pow((_output - expected), 2);
-        }
+      
 
         public void SetInput(double[] input)
         {
@@ -111,8 +108,8 @@ namespace graphics
             {
                 double oldWeight = weights[i];
                 var inp = input[i];
-                
-                weights[i] = oldWeight + learningRate * inp * delta;
+                double dab = learningRate * inp * delta;
+                weights[i] = oldWeight + dab;
             }
 
         }

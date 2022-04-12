@@ -27,19 +27,22 @@ namespace graphics
         double[] output;
         //ожидание от сети
         double expected;
+        //ошибка сети на прошлом этапе
+        double oldError = Double.MaxValue;
 
         //файл с датасетом
         //string input = 
         //сеть1e-7
-        LayredNet pzdk = new LayredNet(3, new int[] { 3, 2, 1 }, 1e-12);
+        LayredNet pzdk = new LayredNet(3, new int[] { 3, 2, 1 }, 1e-10);
         int maxSet = System.IO.File.ReadAllLines(@"../../Storage/input.txt").Length;
 
         Storager s = new Storager();
 
         public Form1()
         {
+            InitializeComponent();
             //эпохи
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 1e5; i++)
             {
                 using (StreamReader sr = new StreamReader(@"../../Storage/input.txt"))
                 {
@@ -53,20 +56,35 @@ namespace graphics
                         pzdk.SetFirstInput(data[1].Split(' ').Select(double.Parse).ToArray());
                         
                         output = pzdk.Compute();
-                        pzdk.BackPropagation(expected);
+                        pzdk.BackPropagation(expected, output[0]);
+                        
                     }
-                    
+
+                    var err = pzdk.Err(expected, pzdk.Compute()[0]);
+
+                    if (oldError > err)
+                    {
+                        oldError = err;
+                    }
+                    else
+                    {
+                        label1.Text = "Нейронка не учится";
+                        break;
+                    }
+
+
                     sr.DiscardBufferedData();
                     sr.BaseStream.Seek(0, System.IO.SeekOrigin.Begin);
                 }
             }
-            InitializeComponent();
+           
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            b = 5;
+
             a = 0;
-            b = 10;
             h = 0.1;
             x = a;
 
@@ -77,17 +95,12 @@ namespace graphics
                 this.chart1.Series[1].Points.AddXY(x, y);
                 x += h;
             }
-
             
-
             a = 0;
-            b = 10;
             h = 1;
             x = a;
 
             this.chart1.Series[0].Points.Clear();
-            
-
             while (x <= b)
             {
                 pzdk.SetFirstInput(new double[] { x, x, x });

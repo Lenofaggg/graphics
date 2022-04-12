@@ -45,6 +45,11 @@ namespace graphics
         //    function = fn1;
         //}
 
+        public double Err(double ex, double outp)
+        {
+            return 0.5 * Math.Pow((outp - ex), 2);
+        }
+
         public void SetFirstInput(double[] input)
         {
             _layerList[0].SetInputs(input);
@@ -65,23 +70,44 @@ namespace graphics
         }
 
         //от выходных к входным
-        public void BackPropagation(double expected)
+        public void BackPropagation(double expected, double output)
         {
             //работа с выходным нейроном 
 
             //на выходе массив из 1 элемента
-            double output = _layerList[_layerList.Length - 1].Compute()[0];
+            //double output = _layerList[_layerList.Length - 1].Compute()[0];
+
             //дэльта выходного слоя-нейрона
             _layerList[_layerList.Length - 1].Neurons[0].CalcDelta(expected);
 
-            //работа со скрытыми слоями
+            //вычисление дельт <-
             for (int j = _layerList.Length - 2; j >= 1; j--)
             {
                 var layer = _layerList[j];
                 var previousLayer = _layerList[j + 1];
 
-                layer.Learning(previousLayer);
+                layer.CalcDelta(previousLayer);
             }
+
+            //обучение ->
+            for (int j = 1; j < _layerList.Length; j++)
+            {
+                _layerList[j].Learning();
+            }
+
+            #region comments1
+
+            //работа со скрытыми слоями
+            //for (int j = _layerList.Length - 2; j >= 1; j--)
+            //{
+            //    var layer = _layerList[j];
+            //    var previousLayer = _layerList[j + 1];
+
+            //    layer.Learning(previousLayer);
+            //}
+
+            #endregion
+
         }
     }
 }

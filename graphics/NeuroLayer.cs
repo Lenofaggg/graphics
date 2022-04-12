@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using graphics.Functions;
+
 namespace graphics
 {
     public class NeuroLayer
@@ -64,14 +65,24 @@ namespace graphics
         }
 
 
-        public void Learning(NeuroLayer previousLayer)
+        public void CalcDelta(NeuroLayer previousLayer)
         {
             //приходимые значения на 1 нейрон, т.к. на все нейроны приходят одинаковые значения
             double[] expected = previousLayer.Neurons
                                 .Select(neuron => neuron.input).First().ToArray();
 
-            Neurons[Neurons.Length-1].CalcDelta(previousLayer.CalcDeltaOnWeightsFromNeurons(Neurons.Length - 1));
-            Neurons[Neurons.Length - 1].Learn(LayredNet.learningRate);
+            //делать дельты 
+            //перебор всех нейронов(получение дельт) = кол - во синопсов любого из нейронов следующего слоя
+            //  , тк все со всеми связанны
+            for (int i = 0; i < expected.Length; i++)
+            {
+                Neurons[i].CalcDelta(previousLayer.CalcDeltaOnWeightsFromNeurons(i));
+            }
+
+
+            #region comments2
+            //Neurons[Neurons.Length-1].CalcDelta(previousLayer.CalcDeltaOnWeightsFromNeurons(Neurons.Length - 1));
+            //Neurons[Neurons.Length - 1].Learn(LayredNet.learningRate);
 
             //перебор всех нейронов(получение дельт) = кол - во синопсов любого из нейронов следующего слоя
             //  , тк все со всеми связанны
@@ -84,6 +95,18 @@ namespace graphics
             //}
 
 
+            #endregion
         }
+
+        public void Learning()
+        {
+            //учить учить учить
+            for (int i = 0; i < Neurons.Length; i++)
+            {
+                Neurons[i].Learn(LayredNet.learningRate);
+            }
+        }
+
+
     }
 }
