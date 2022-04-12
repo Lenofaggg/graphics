@@ -19,5 +19,15 @@ namespace graphics
         {
             sw.Write($"{d.ToString()} \n ");
         }
+
+        public string[] GenerateInputs(double jSet)
+        {
+            string[] ret= new string[2];
+            
+            ret[0] = jSet.ToString();
+            ret[1] = $"{jSet * jSet} {jSet * jSet} {jSet * jSet}";
+
+            return ret;
+        }
     }
 }

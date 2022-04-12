@@ -22,7 +22,7 @@ namespace graphics
 
             _layerList = new NeuroLayer[size];
             _layerList[0] = new NeuroLayer(layerSize[0], 1, 
-                NeuronType.Input,new Sigmoid());
+                NeuronType.Input,new TangentHyp());
             
 
             for (int i = 1; i < size; i++)
@@ -62,7 +62,7 @@ namespace graphics
 
             for (int i = 1; i < _layerList.Length; i++)
             {
-                _layerList[i].SetInputs(output.ToArray());
+                _layerList[i].SetInputs(output);
                 output = _layerList[i].Compute();
             }
 
@@ -80,8 +80,8 @@ namespace graphics
             //дэльта выходного слоя-нейрона
             _layerList[_layerList.Length - 1].Neurons[0].CalcDelta(expected);
 
-            //вычисление дельт <-
-            for (int j = _layerList.Length - 2; j >= 1; j--)
+            //вычисление дельт скрытых <-
+            for (int j = _layerList.Length - 2; j > 0; j--)
             {
                 var layer = _layerList[j];
                 var previousLayer = _layerList[j + 1];
@@ -89,11 +89,14 @@ namespace graphics
                 layer.CalcDelta(previousLayer);
             }
 
+            //обучение выходного нейрона
+            _layerList[_layerList.Length - 1].Learning();
+
             //обучение <-
-            for (int j = _layerList.Length-1; j >=1 ; j--)
-            {
-                _layerList[j].Learning();
-            }
+            //for (int j = _layerList.Length-1; j >=1 ; j--)
+            //{
+            //    _layerList[j].Learning();
+            //}
 
             #region comments1
 

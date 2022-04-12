@@ -33,24 +33,25 @@ namespace graphics
         //файл с датасетом
         //string input = 
         //сеть1e-7
-        LayredNet pzdk = new LayredNet(3, new int[] { 3, 2, 1 }, 1e-10);
+        LayredNet pzdk = new LayredNet(3, new int[] { 3, 2, 1 }, 1e-7);
         int maxSet = System.IO.File.ReadAllLines(@"../../Storage/input.txt").Length;
-
+        //private int maxSet = 9;
         Storager s = new Storager();
 
         public Form1()
         {
             InitializeComponent();
             //эпохи
-            for (int i = 0; i < 1e5; i++)
+            for (int i = 0; i < 1e4; i++)
             {
                 using (StreamReader sr = new StreamReader(@"../../Storage/input.txt"))
                 {
                     //датасеты
-                    for (int j = 0; j < maxSet;j++)
+                    //for (double j = 0; j < maxSet; j+=0.1)
+                    for (int j = 0; j < maxSet; j += 1)
                     {
-                        
                         //загрузка датасета в сеть
+                        //string[] data = s.GenerateInputs(j);
                         string[] data = s.Read(sr);
                         expected = Convert.ToDouble(data[0]);
                         pzdk.SetFirstInput(data[1].Split(' ').Select(double.Parse).ToArray());
@@ -73,8 +74,8 @@ namespace graphics
                     }
 
 
-                    sr.DiscardBufferedData();
-                    sr.BaseStream.Seek(0, System.IO.SeekOrigin.Begin);
+                    //sr.DiscardBufferedData();
+                    //sr.BaseStream.Seek(0, System.IO.SeekOrigin.Begin);
                 }
             }
            

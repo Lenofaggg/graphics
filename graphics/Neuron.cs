@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using graphics.Functions;
 
@@ -23,7 +24,8 @@ namespace graphics
 
         //функция нейрона, размер входных связей, тип нейрона
         public Neuron(IExcFunction func, int size, NeuronType nt)
-        {            
+        {
+            Thread.Sleep(100);
             _Derivative = func.Derivative;
             _Activate = func.Execute;
 
@@ -83,6 +85,7 @@ namespace graphics
 
         public double Activate()
         {
+            Thread.Sleep(100);
             var res = Summator();
             _output = _Activate(res);
             return _output;
@@ -108,8 +111,8 @@ namespace graphics
             {
                 double oldWeight = weights[i];
                 var inp = input[i];
-                double dab = learningRate * inp * delta;
-                weights[i] = oldWeight + dab;
+                double newWeight = oldWeight + learningRate * inp * delta;
+                weights[i] = newWeight;
             }
 
         }
