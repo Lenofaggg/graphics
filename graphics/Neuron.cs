@@ -43,8 +43,8 @@ namespace graphics
                 {
                     weights[i] = rnd.NextDouble() + 1;
                 }
-                //bias = rnd.NextDouble() + 1;
-                bias = 0;
+                bias = rnd.NextDouble() + 1;
+                //bias = 0;
             }
             else
             {

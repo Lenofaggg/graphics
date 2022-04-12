@@ -16,6 +16,7 @@ namespace graphics.Functions
         public double Execute(double input)
         {
             return (Math.Exp(2 * input) - 1) / (Math.Exp(2 * input) + 1);
+            //return (2 / (Math.Exp(-2 * input) + 1))-1;
         }
     }
 }

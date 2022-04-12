@@ -30,7 +30,7 @@ namespace graphics
                 if (i != (size - 1))
                 {
                     _layerList[i] = new NeuroLayer(layerSize[i], layerSize[i - 1],
-                        NeuronType.Hidden, new Sigmoid());
+                        NeuronType.Hidden, new TangentHyp());
                 }
                 else
                 {
@@ -89,8 +89,8 @@ namespace graphics
                 layer.CalcDelta(previousLayer);
             }
 
-            //обучение ->
-            for (int j = 1; j < _layerList.Length; j++)
+            //обучение <-
+            for (int j = _layerList.Length-1; j >=1 ; j--)
             {
                 _layerList[j].Learning();
             }

@@ -82,7 +82,7 @@ namespace graphics
 
         private void button1_Click(object sender, EventArgs e)
         {
-            b = 5;
+            b = 10;
 
             a = 0;
             h = 0.1;
@@ -97,7 +97,7 @@ namespace graphics
             }
             
             a = 0;
-            h = 1;
+            h = 2;
             x = a;
 
             this.chart1.Series[0].Points.Clear();

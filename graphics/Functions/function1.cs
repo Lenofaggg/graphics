@@ -15,9 +15,9 @@ namespace graphics.Functions
 
         public double Execute(double input)
         {
-            // return Math.Sqrt(input);
-            //return Math.Pow(input,2);
-            return input;
+             //return Math.Sqrt(input);
+            return Math.Pow(input,2);
+            //return input;
         }
     }
 }
