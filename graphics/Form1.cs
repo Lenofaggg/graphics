@@ -74,8 +74,8 @@ namespace graphics
                     }
 
 
-                    //sr.DiscardBufferedData();
-                    //sr.BaseStream.Seek(0, System.IO.SeekOrigin.Begin);
+                    sr.DiscardBufferedData();
+                    sr.BaseStream.Seek(0, System.IO.SeekOrigin.Begin);
                 }
             }
            
