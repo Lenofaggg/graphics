@@ -93,7 +93,7 @@ namespace graphics
             //_layerList[_layerList.Length - 1].Learning();
 
             //обучение ->
-            for (int j = 0; j <= _layerList.Length - 1; j++)
+            for (int j = 1; j <= _layerList.Length - 1; j++)
             {
                 _layerList[j].Learning();
             }
