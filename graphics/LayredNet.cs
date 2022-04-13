@@ -22,7 +22,7 @@ namespace graphics
 
             _layerList = new NeuroLayer[size];
             _layerList[0] = new NeuroLayer(layerSize[0], 1, 
-                NeuronType.Input,new TangentHyp());
+                NeuronType.Input,new Sigmoid());
             
 
             for (int i = 1; i < size; i++)
@@ -30,12 +30,12 @@ namespace graphics
                 if (i != (size - 1))
                 {
                     _layerList[i] = new NeuroLayer(layerSize[i], layerSize[i - 1],
-                        NeuronType.Hidden, new TangentHyp());
+                        NeuronType.Hidden, new Sigmoid());
                 }
                 else
                 {
                     _layerList[i] = new NeuroLayer(layerSize[i], layerSize[i - 1],
-                        NeuronType.Output,new Linear());
+                        NeuronType.Output,new Sigmoid());
                 }
             }
         }
@@ -90,13 +90,13 @@ namespace graphics
             }
 
             //обучение выходного нейрона
-            _layerList[_layerList.Length - 1].Learning();
+            //_layerList[_layerList.Length - 1].Learning();
 
-            //обучение <-
-            //for (int j = _layerList.Length-1; j >=1 ; j--)
-            //{
-            //    _layerList[j].Learning();
-            //}
+            //обучение ->
+            for (int j = 0; j <= _layerList.Length - 1; j++)
+            {
+                _layerList[j].Learning();
+            }
 
             #region comments1
 

@@ -33,7 +33,7 @@ namespace graphics
         //файл с датасетом
         //string input = 
         //сеть1e-7
-        LayredNet pzdk = new LayredNet(3, new int[] { 3, 2, 1 }, 1e-7);
+        LayredNet pzdk = new LayredNet(3, new int[] { 3, 2, 1 }, 1e-5);
         int maxSet = System.IO.File.ReadAllLines(@"../../Storage/input.txt").Length;
         //private int maxSet = 9;
         Storager s = new Storager();
@@ -42,7 +42,7 @@ namespace graphics
         {
             InitializeComponent();
             //эпохи
-            for (int i = 0; i < 1e4; i++)
+            for (int i = 0; i < 1e2; i++)
             {
                 using (StreamReader sr = new StreamReader(@"../../Storage/input.txt"))
                 {
@@ -70,6 +70,7 @@ namespace graphics
                     else
                     {
                         label1.Text = "Нейронка не учится";
+                        label2.Text = $"На эпохе №{i}";
                         break;
                     }
 
@@ -98,7 +99,7 @@ namespace graphics
             }
             
             a = 0;
-            h = 2;
+            h = 1;
             x = a;
 
             this.chart1.Series[0].Points.Clear();

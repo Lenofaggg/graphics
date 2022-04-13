@@ -56,6 +56,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Functions\function1.cs" />
+    <Compile Include="Functions\Gauss.cs" />
     <Compile Include="Functions\IExcFunction.cs" />
     <Compile Include="Functions\Linear.cs" />
     <Compile Include="Functions\Sigmoid.cs" />
