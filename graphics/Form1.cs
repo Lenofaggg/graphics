@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using graphics.Functions;
 using System.IO;
+using System.Threading;
 
 namespace graphics
 {
@@ -37,12 +38,13 @@ namespace graphics
         int maxSet = System.IO.File.ReadAllLines(@"../../Storage/input.txt").Length;
         //private int maxSet = 9;
         Storager s = new Storager();
-
+        
         public Form1()
         {
             InitializeComponent();
+            Thread.Sleep(1000);
             //эпохи
-            for (int i = 0; i < 1e2; i++)
+            for (int i = 0; i < 1e6; i++)
             {
                 using (StreamReader sr = new StreamReader(@"../../Storage/input.txt"))
                 {
